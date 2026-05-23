@@ -159,7 +159,7 @@
 <nav class="flex flex-col gap-2">
 <a class="flex items-center justify-between p-4 rounded-xl hover:bg-primary/5 active:bg-primary/10 transition-colors border border-outline-variant/10 group" href="javascript:void(0)" onclick="filterCategory('all')">
 <div class="flex flex-col">
-<span class="font-body-lg text-on-surface font-semibold">Todos los aromas</span>
+<span class="font-body-lg text-on-surface font-semibold">Todos los Aromas</span>
 </div>
 <span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">chevron_right</span>
 </a>
@@ -186,48 +186,84 @@
 </a>
 </nav>
 <div class="mt-auto pt-6 border-t border-outline-variant/20">
-<p class="text-body-sm text-on-surface-variant/60 text-center">Aromas Exclusivos SV © 2024</p>
+<p class="text-body-sm text-on-surface-variant/60 text-center">Aromas Exclusivos.SV  @ 2026</p>
 </div>
 </div>
 
-<div class="fixed bottom-0 left-0 right-0 z-[70] bg-surface-container-lowest rounded-t-[32px] shadow-[0_-8px_30px_rgb(0,0,0,0.12)] p-6 pb-12" id="shipping-modal">
-<div class="w-12 h-1.5 bg-outline-variant/30 rounded-full mx-auto mb-6"></div>
-<div class="flex items-center justify-between mb-6">
-<div class="flex items-center gap-3">
-<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined text-3xl">local_shipping</span>
-</div>
-<div>
-<h2 class="font-headline-md text-on-surface">Tarifas de Envío</h2>
-<p class="text-body-sm text-on-surface-variant">Entrega rápida y segura</p>
-</div>
-</div>
-<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors text-on-surface-variant" onclick="toggleShippingModal()">
-<span class="material-symbols-outlined">close</span>
-</button>
-</div>
-<div class="space-y-3">
-<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl border border-outline-variant/10">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary">home_pin</span>
-<span class="font-body-lg text-on-surface font-medium">San Salvador</span>
-</div>
-<span class="font-headline-md text-secondary">Desde $1.50</span>
-</div>
-<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl border border-outline-variant/10">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary">distance</span>
-<span class="font-body-lg text-on-surface font-medium">Departamentales</span>
-</div>
-<span class="font-headline-md text-secondary">Desde $1.50</span>
-</div>
-</div>
-<div class="mt-8">
-<a class="flex items-center justify-center gap-2 w-full bg-primary text-white py-4 rounded-xl font-semibold hover:bg-primary/90 transition-colors" href="https://wa.me/50373247142">
-<span class="material-symbols-outlined">chat</span>
-            Consultar disponibilidad
-        </a>
-</div>
+<div class="fixed bottom-0 left-0 right-0 z-[70] bg-surface-container-lowest rounded-t-[32px] shadow-[0_-8px_30px_rgb(0,0,0,0.12)] p-6 pb-12 max-h-[85vh] overflow-y-auto" id="shipping-modal">
+  <div class="w-12 h-1.5 bg-outline-variant/30 rounded-full mx-auto mb-6"></div>
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary relative">
+        <span class="material-symbols-outlined text-3xl">shopping_cart</span>
+        <span id="cart-count-badge" class="absolute -top-1 -right-1 bg-error text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold hidden">0</span>
+      </div>
+      <div>
+        <h2 class="font-headline-md text-on-surface">Carrito de Compras</h2>
+        <p class="text-body-sm text-on-surface-variant">Revisa tus productos y tarifas de envío</p>
+      </div>
+    </div>
+    <button class="p-2 hover:bg-surface-container-high rounded-full transition-colors text-on-surface-variant" onclick="toggleShippingModal()">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+
+  <div class="mb-6 border-b border-outline-variant/20 pb-4">
+      <div class="flex items-center justify-between mb-4 gap-3">
+        <div>
+          <h3 class="text-xs font-bold tracking-wider uppercase text-primary mb-3">Aromas Seleccionados</h3>
+          <p class="text-body-sm text-on-surface-variant">Presiona Seleccionar para elegir aromas desde el menú completo.</p>
+        </div>
+        <button onclick="toggleSelectMenu()" class="px-4 py-2 rounded-full bg-primary text-white text-xs font-semibold uppercase shadow-sm hover:bg-primary/90 transition-colors">
+          Seleccionar
+        </button>
+      </div>
+      <div id="select-menu" class="hidden mb-4 rounded-3xl p-4 bg-surface-container-high border border-outline-variant/20">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h4 class="font-body-lg text-on-surface font-semibold">Menú de Todos los Aromas</h4>
+            <p class="text-body-sm text-on-surface-variant">Ajusta cantidad, revisa precio y usa Editar o Eliminar.</p>
+          </div>
+          <button onclick="toggleSelectMenu()" class="px-3 py-2 rounded-full bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-colors">Cerrar</button>
+        </div>
+        <div id="select-menu-items" class="space-y-3 max-h-[280px] overflow-y-auto pr-1"></div>
+        <p id="select-menu-empty" class="text-body-sm text-on-surface-variant italic text-center py-4 bg-surface-container-low/40 rounded-xl hidden">
+          No hay aromas disponibles en el menú.
+        </p>
+      </div>
+      <div id="cart-aromas-list" class="space-y-3 max-h-[220px] overflow-y-auto pr-1">
+        <p id="cart-empty-text" class="text-body-sm text-on-surface-variant/60 italic text-center py-4 bg-surface-container-low/40 rounded-xl">No has Añadido Ningún Aroma Todavía.</p>
+      </div>
+    </div>
+  <div class="space-y-3">
+    <h3 class="text-xs font-bold tracking-wider uppercase text-primary mb-2">Tarifas de Envío</h3>
+    <div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl border border-outline-variant/10">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary">home_pin</span>
+        <span class="font-body-lg text-on-surface font-medium">San Salvador</span>
+      </div>
+      <span class="font-headline-md text-secondary">Desde $1.50</span>
+    </div>
+    <div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl border border-outline-variant/10">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary">distance</span>
+        <span class="font-body-lg text-on-surface font-medium">Departamentales</span>
+      </div>
+      <span class="font-headline-md text-secondary">Desde $1.50</span>
+    </div>
+  </div>
+
+  <div class="mt-6 p-4 bg-primary/5 rounded-2xl border border-primary/10 flex justify-between items-center">
+    <span class="font-body-lg text-on-surface font-bold">Total en Aromas:</span>
+    <span id="cart-total-value" class="text-2xl font-black text-secondary">$0.00</span>
+  </div>
+
+  <div class="mt-6">
+    <a id="btn-send-whatsapp" class="flex items-center justify-center gap-2 w-full bg-primary text-white py-4 rounded-xl font-semibold hover:bg-primary/90 transition-colors opacity-60 pointer-events-none" href="javascript:void(0)">
+      <span class="material-symbols-outlined">chat</span>
+      Enviar Pedido por WhatsApp
+    </a>
+  </div>
 </div>
 
 <header class="docked full-width top-0 sticky z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 px-margin-mobile py-4 flex items-center justify-between">
@@ -238,7 +274,7 @@
 <div class="flex items-center gap-1">
 <button class="text-primary hover:bg-primary/10 transition-colors p-2 rounded-full">
 </button>
-<a class="text-primary hover:bg-primary/10 transition-colors p-2 rounded-full inline-flex items-center justify-center" href="https://share.google/lXhw58o3DaJQeL7Pt" target="_blank">
+<a class="text-primary hover:bg-primary/10 transition-colors p-2 rounded-full inline-flex items-center justify-center" href="https://maps.app.goo.gl/WnvYfGRn6JqcRYQK6" target="_blank">
 <span class="material-symbols-outlined">location_on</span>
 </a>
 <button class="text-primary hover:bg-primary/10 transition-colors p-2 rounded-full" onclick="toggleShippingModal()">
@@ -278,6 +314,7 @@
   <button onclick="filterCategory('latas-organic')" id="btn-latas-organic" class="nav-btn px-4 py-1.5 bg-surface-container-high text-on-surface hover:bg-primary/10 rounded-full font-semibold text-xs tracking-wider uppercase transition-all">Latas Organic</button>
   <button onclick="filterCategory('carton-ld')" id="btn-carton-ld" class="nav-btn px-4 py-1.5 bg-surface-container-high text-on-surface hover:bg-primary/10 rounded-full font-semibold text-xs tracking-wider uppercase transition-all">Cartón LD</button>
   <button onclick="filterCategory('super-organic')" id="btn-super-organic" class="nav-btn px-4 py-1.5 bg-surface-container-high text-on-surface hover:bg-primary/10 rounded-full font-semibold text-xs tracking-wider uppercase transition-all">Super Organic</button>
+
 </nav>
 
 <section class="product-section mt-stack-lg px-margin-mobile scroll-mt-40" id="latas-organic">
@@ -383,67 +420,67 @@
 <div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
 <img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZaIGVjQ5D0qC9uHs5bTtDrsSQ1uKFD2yB33YKXQUsJ1VVw365c806BTpXaoAs3DUslhf4dJOB0-UyVMIstJ30E2FeUHHoynzQoE8kXXptyKvdvUINRfrF7iU_TAZt6NKLRDPqsRG6qAKGde9Ihrb0J1HD3_pZuCyFVLFWr1T8lfTLqVkvnfP_pYXTym-IXOgdpzsYW_Y5KQ1_jmQPA94DYULIn4QvLTsqgn4q7KOpDa1XAtU89b8fmrnLQz_j4qGSRaV-nJuW2h8C">
 <h3 class="font-headline-md text-body-lg text-on-surface font-bold">Cherry</h3>
-<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Dulce y frutal, recuerda a cerezas maduras y jugosas.</p>
 <span class="text-secondary font-bold mt-3 text-base">$5.00</span>
 </div>
 <div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
 <img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAkwut3IcowBkVwB6QQT7ZC5flYK4XXA1YgqST_Y17SZ7UzNeiMepZ8iQelffJ2KrKyH_2kUM3770B480xXnPYkPRrDyNhE7hei61kOgl0UN0Y4m6oTSl-8N1F-1PaBHuSU_pjKkaSbf9sYqVKdNGDAhbUqoDpePn1geWEFj9W8kk3XKz0toCQHQZLWyNER3Pw_-t2FLpLuoyMYG8legmyu5zrPFYKFx_2Ts8Fd1yoioGUJnK9gBGksRTyv3Vv9rmFcRR6PwvAHG2-">
 <h3 class="font-headline-md text-body-lg text-on-surface font-bold">Berry Punch</h3>
-<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Explosión vibrante de frutos rojos mezclados, fresco y energético.</p>
 <span class="text-secondary font-bold mt-3 text-base">$5.00</span>
 </div>
 <div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
 <img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1doGJGDSQ8lWiyyulktNRUB9c0AlqPKsw_800l-HZvAecBgVpSd1PcfRFhJ5C3A2mI2ScPN6SdFtoeTR5BA43o16_HnXNjr4OPoa11vxz8mEXNzMpziTO1A7JpnsYy0FZHk13F0omcs5DnIFsWCs9O44RYJyZRJ4VwU2tulJnRQFH98zDCwXa9CAhzDZT-R_TAh2SmPB4CSS8x98bhWYG9QvW6ZfgyHG6kNakw2pjjQN5iplxJU9ezunATeZcmFmC17Wjcdc1l_3w">
 <h3 class="font-headline-md text-body-lg text-on-surface font-bold">Cran Burst</h3>
-<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1"> Aroma ácido y refrescante de arándanos, con un toque chispeante.</p>
 <span class="text-secondary font-bold mt-3 text-base">$5.00</span>
 </div>
 <div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
 <img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARW03CJalcH_VW1wHv7RdRUfT9CYhOBSoa4my1LJQsH6WRw36lkvksP79SfJzWdvqX0Wa8yi_wdOafQ2VtYMCvrIHvx5snpMkDu6Mb3m-84x2Ij9zX6M7QlNFAhAqXG_y-kJWQLRe40XKRg_31jXBCuW2agom1upu7mpoqybsm3R-oaZgVAH0XlIceDTIwefhdpaxW974OEbk_Z_due0aZtuwy7_AoykuKDrudVc1E9J9R1Bnpexvo2NuQXUNoV6lJS7QDDD9F2VXf">
 <h3 class="font-headline-md text-body-lg text-on-surface font-bold">Black</h3>
-<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1"> Fragancia intensa tipo colonia masculina, elegante y audaz.</p>
 <span class="text-secondary font-bold mt-3 text-base">$5.00</span>
 </div>
 <div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
 <img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTJgy3TguJugHXIoSA2Dek3uOSkCguaJWGL628Kk8qbID3U-IOTr4-PecQECcjKR3MVuYUOEQL3sy5zAmZ0abZMG4FXbSFiO4df5qAPVmaVLP_xrZnhTLtnpziCE0LjSv-hEix-S6qTnSUS6SZBUt3_TCdDxy7WCfQJYWSqqvkIsYDoymX0MlPSY35TsOLRp5LheN9F0c8UDa8ZLCvGio0HQa8TrhUZarc3JTMDtUUzktTKGzqrz3YlLmsGF0NYck3RgylJjfImNQB">
 <h3 class="font-headline-md text-body-lg text-on-surface font-bold">Blue Lava</h3>
-<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1"> Energizante mezcla cítrica inspirada en volcanes, fresca y dinámica.</p>
 <span class="text-secondary font-bold mt-3 text-base">$5.00</span>
 </div>
 <div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
 <img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB144F1dkGX0iQx1qTDv6i-zH4V1WLhFWJm598FA4won4xgEgMKuEehTFupwNtv5g6kUL1VMJysYlT09gKEs50mcw4_o3nFiVa8y3z23faruV-u4rCqFTbwxLDsPN8QebUwFYgF74xQRhhaDVnmrO6dYPBpx66D8XJFmsAj9BXmsmEojuDIeSwAMsl_ZNXPnOZpgVcYiH6CjnSbn5kNBAJEUg28M7EONGAA5ox6YOCQrtnnq0wT1XsagKB-d9u8WXTbE3Fxn9bbZgt6">
 <h3 class="font-headline-md text-body-lg text-on-surface font-bold">New Car</h3>
-<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1"> El clásico olor a carro nuevo, limpio y sofisticado.</p>
 <span class="text-secondary font-bold mt-3 text-base">$5.00</span>
 </div>
 <div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
 <img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDu-LcBiRfLS-cnveRK6kUjt18JBbfD0suBPsQxVvYOFZmqM12Jmope2L0rAn8kEbpwbWCrEkwsRj-6jXOBprY-0LhMG6JSFg95soso5bOpAjJrElxtpeca3E7g-xcEad7szKrmR3o0_iwEUeXxltN5uu06nK1_eAWcjGL4fAihNlDBSLmpDbuhtN8Q9Nwbf2FetDAbwV8p8V13ucwqP68ukuW8DP8ltP24I2-MSZASbU4E84ZTb6KmyHWQrVpln0lhsF71OEQH8L7y">
 <h3 class="font-headline-md text-body-lg text-on-surface font-bold">Tropic Twist</h3>
-<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Refrescante combinación de frutas tropicales y cítricos.</p>
 <span class="text-secondary font-bold mt-3 text-base">$5.00</span>
 </div>
 <div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
 <img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvNlM0Q2CnIzzGkSanwpyF_jKO00NLVd0rPmKItnXN4Q0zllj9DcvJ_WMJIcE9hBZYkvktozikvSuPpq1aITAXffHHxu0xKaI6SnWP_EMguuh-Lt9WCU_4inp4dNgasf64RStso-UhiCN-YYLUPR8ipqIyvqMFkhzcZIiiJFyLmHG2W55StD7SwwcSf1ksF-WFxjugkh-BQyRumSMjubPyALeD6LeRDBtIErk5Ynyxt0zozOL_YAp_nBu81ytOx2Z9db8czU949wKZ">
 <h3 class="font-headline-md text-body-lg text-on-surface font-bold">Vanilla Frosting</h3>
-<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Dulce y cremoso, como un pastel recién glaseado.</p>
 <span class="text-secondary font-bold mt-3 text-base">$5.00</span>
 </div>
 <div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
 <img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiqAREXw8WlayidNvoKgDgtnXutZAJWYxH5iFX3pbCSxtoCvehRjFo90XSB-aGRCYvz02neT3Gm8PSIwLaRSig22fOxMRmv1C2KKp6qGQMIjNtwN6IdjcXIXmziRqtLmDx5UVLjpWLRAKys_PI5oIKdT5NR_DHV7gflaAl8rJXRxQ6JILKKqrMQeCSjrC5Me5Hi2aHnpDksXrVghTt4VZG7h9SZ7XgZqzaCNdcHVtNh81Bp6EITENNWLlDBa32TA0VUiKvf26V0DHu">
 <h3 class="font-headline-md text-body-lg text-on-surface font-bold">Tsunami</h3>
-<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1"> Explosión marina fresca, con notas acuáticas intensas.</p>
 <span class="text-secondary font-bold mt-3 text-base">$5.00</span>
 </div>
 <div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
 <img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWBvBKwEyQcGacy8yT7lznk9uUPhgPt49nDWNrHNJMypm_oPQHL0i5bu_8B_bmzYHjCrj5MWC0hEXL4tMv6CSpVPLICQ6ejbKQz45fYPE2IVr0gIikMSjDNfspRdKqYoHnuGeEEGKMIkSQjD42OLYQu9YWYzyKQIgesS-okEPuvwwOWQVkwbVUU05n4dt5k3dNp6ueMrb35dQNff84kWhzhs1z_JvZnEm9KE7bQu6l9pAOdWHP8gltPtyVCWb3YgMcjfev649ORNRr">
 <h3 class="font-headline-md text-body-lg text-on-surface font-bold">Gold</h3>
-<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1"> Aroma lujoso y elegante, sofisticado y cálido.</p>
 <span class="text-secondary font-bold mt-3 text-base">$5.00</span>
 </div>
 <div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
 <img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBO4DVC8fHj7skm8WsSI4-viJoWYdVJUTWuhw_SNLGAdLuHqu2-pkivQInNE4vCXh9-HffWmGdLffWBk1JdjKab2MdcJiHF3e62AmBtEMpA2oH8ltGMGLEdifiMmFHnXV2BbAXYBXjdiHuwCUd7logkbtd8jVE96V8HoHomJyhU_oNa2Y8pHPQf0D_6zdf_SbNhuqcC2PRSDazG46ZGh_GM_9WoUpM4sfpy6dK6DeNlCAwoeyw5rJfwXdspMctp222Za0dwV3Qi6n1">
 <h3 class="font-headline-md text-body-lg text-on-surface font-bold">Pure Sunshine</h3>
-<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1"> Brillante mezcla cítrica que transmite alegría y vitalidad.</p>
 <span class="text-secondary font-bold mt-3 text-base">$5.00</span>
 </div>
 </div>
@@ -468,6 +505,9 @@
 </nav>
 
 <script>
+    // =========================================================================
+    // NAVEGACIÓN Y FILTRADO DE CATEGORÍAS
+    // =========================================================================
     function filterCategory(categoryId) {
         const sections = document.querySelectorAll('.product-section');
         const buttons = document.querySelectorAll('.nav-btn');
@@ -491,13 +531,16 @@
         closeAllOverlays();
     }
 
+    // =========================================================================
+    // CONTROL DE MODALES Y OVERLAYS
+    // =========================================================================
     function toggleDrawer() {
         const drawer = document.getElementById('category-drawer');
         const overlay = document.getElementById('drawer-overlay');
         const modal = document.getElementById('shipping-modal');
-        modal.classList.remove('open');
-        drawer.classList.toggle('open');
-        overlay.classList.toggle('open');
+        if (modal) modal.classList.remove('open');
+        if (drawer) drawer.classList.toggle('open');
+        if (overlay) overlay.classList.toggle('open');
         updateBodyScroll();
     }
 
@@ -505,38 +548,393 @@
         const modal = document.getElementById('shipping-modal');
         const overlay = document.getElementById('drawer-overlay');
         const drawer = document.getElementById('category-drawer');
-        drawer.classList.remove('open');
-        modal.classList.toggle('open');
-        overlay.classList.toggle('open');
+        if (drawer) drawer.classList.remove('open');
+        if (modal) modal.classList.toggle('open');
+        if (overlay) overlay.classList.toggle('open');
         updateBodyScroll();
     }
 
     function closeAllOverlays() {
-        document.getElementById('category-drawer').classList.remove('open');
-        document.getElementById('shipping-modal').classList.remove('open');
-        document.getElementById('drawer-overlay').classList.remove('open');
+        const drawer = document.getElementById('category-drawer');
+        const modal = document.getElementById('shipping-modal');
+        const overlay = document.getElementById('drawer-overlay');
+
+        if (drawer) drawer.classList.remove('open');
+        if (modal) modal.classList.remove('open');
+        if (overlay) overlay.classList.remove('open');
+        
+        closeQuantityModal(); 
         updateBodyScroll();
     }
 
     function updateBodyScroll() {
-        const drawerOpen = document.getElementById('category-drawer').classList.contains('open');
-        const modalOpen = document.getElementById('shipping-modal').classList.contains('open');
-        if (drawerOpen || modalOpen) {
+        const drawer = document.getElementById('category-drawer');
+        const modal = document.getElementById('shipping-modal');
+        const qtyModalElem = document.getElementById('quantity-modal');
+
+        const drawerOpen = drawer ? drawer.classList.contains('open') : false;
+        const modalOpen = modal ? modal.classList.contains('open') : false;
+        const qtyModal = qtyModalElem ? qtyModalElem.classList.contains('open') : false;
+        
+        if (drawerOpen || modalOpen || qtyModal) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = '';
         }
     }
 
-    document.querySelectorAll('.glass-card').forEach(card => {
-        card.addEventListener('mousedown', () => {
-            card.style.transform = 'scale(0.98)';
-            card.style.transition = 'transform 0.1s ease';
-        });
-        card.addEventListener('mouseup', () => {
-            card.style.transform = 'scale(1)';
+    // Inicialización de efectos visuales cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.1s ease';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
         });
     });
+
+    // =========================================================================
+    // LÓGICA DEL CARRITO Y CONTROL DE CANTIDADES (MODAL INTEGRADO)
+    // =========================================================================
+    let aromaCart = [];
+    let tempSelectedProduct = { name: '', price: 0, category: '' };
+    let tempSelectedQty = 1;
+    let selectMenuSelections = [];
+
+    function openQuantityModal(name, price, category = 'Aroma') {
+        tempSelectedProduct = { name: name, price: price, category: category };
+        tempSelectedQty = 1; 
+
+        const titleElem = document.getElementById('q-modal-title');
+        const catElem = document.getElementById('q-modal-category');
+        const counterElem = document.getElementById('q-modal-counter');
+        const priceElem = document.getElementById('q-modal-total-price');
+
+        if(titleElem) titleElem.innerText = name;
+        if(catElem) catElem.innerText = category;
+        if(counterElem) counterElem.innerText = tempSelectedQty;
+        if(priceElem) priceElem.innerText = `$${price.toFixed(2)}`;
+
+        const qModal = document.getElementById('quantity-modal');
+        const qContent = document.getElementById('quantity-modal-content');
+        
+        if(qModal && qContent) {
+            qModal.classList.remove('opacity-0', 'pointer-events-none');
+            qModal.classList.add('open');
+            qContent.classList.remove('scale-95');
+            qContent.classList.add('scale-100');
+        }
+        updateBodyScroll();
+    }
+
+    function closeQuantityModal() {
+        const qModal = document.getElementById('quantity-modal');
+        const qContent = document.getElementById('quantity-modal-content');
+        
+        if(qModal && qContent) {
+            qModal.classList.add('opacity-0', 'pointer-events-none');
+            qModal.classList.remove('open');
+            qContent.classList.remove('scale-100');
+            qContent.classList.add('scale-95');
+        }
+        setTimeout(() => { updateBodyScroll(); }, 150);
+    }
+
+    function changeModalQty(amount) {
+        tempSelectedQty += amount;
+        if(tempSelectedQty < 1) tempSelectedQty = 1; 
+
+        const subTotal = tempSelectedProduct.price * tempSelectedQty;
+        
+        const counterElem = document.getElementById('q-modal-counter');
+        const priceElem = document.getElementById('q-modal-total-price');
+        
+        if(counterElem) counterElem.innerText = tempSelectedQty;
+        if(priceElem) priceElem.innerText = `$${subTotal.toFixed(2)}`;
+    }
+
+    function confirmAromaAdd() {
+        const name = tempSelectedProduct.name;
+        const price = tempSelectedProduct.price;
+        const qty = tempSelectedQty;
+
+        const currentItem = aromaCart.find(item => item.name === name);
+        if(currentItem) {
+            currentItem.quantity += qty;
+        } else {
+            aromaCart.push({ name: name, price: price, quantity: qty });
+        }
+
+        closeQuantityModal();
+        refreshCartUI();
+    }
+
+    function addAromaToCart(name, price) {
+        const currentItem = aromaCart.find(item => item.name === name);
+        if(currentItem) {
+            currentItem.quantity += 1;
+        } else {
+            aromaCart.push({ name: name, price: price, quantity: 1 });
+        }
+        refreshCartUI();
+    }
+
+    function refreshCartUI() {
+        const listContainer = document.getElementById('cart-aromas-list');
+        const emptyText = document.getElementById('cart-empty-text');
+        const totalValueElem = document.getElementById('cart-total-value');
+        const badgeCount = document.getElementById('cart-count-badge');
+        const badgeHeader = document.getElementById('badge-header-cart');
+        const sendButton = document.getElementById('btn-send-whatsapp');
+
+        if(!listContainer) return;
+        listContainer.innerHTML = '';
+
+        if(aromaCart.length === 0) {
+            if(emptyText) emptyText.style.display = 'block'; 
+            if(totalValueElem) totalValueElem.innerText = "$0.00";
+            if(badgeCount) badgeCount.classList.add('hidden');
+            if(badgeHeader) badgeHeader.classList.add('hidden');
+            if(sendButton) {
+                sendButton.classList.add('opacity-60', 'pointer-events-none');
+                sendButton.href = "javascript:void(0)";
+            }
+            return;
+        }
+
+        if(emptyText) emptyText.style.display = 'none';
+
+        let computedTotal = 0;
+        let totalAromasCount = 0;
+
+        aromaCart.forEach((item, idx) => {
+            const subTotal = item.price * item.quantity;
+            computedTotal += subTotal;
+            totalAromasCount += item.quantity;
+
+            const cardItem = document.createElement('div');
+            cardItem.className = "flex items-center justify-between p-3 bg-surface-bright rounded-2xl border border-outline-variant/30 shadow-sm gap-2";
+            cardItem.innerHTML = `
+                <div class="flex-grow">
+                    <h4 class="font-body-lg font-semibold text-on-surface text-sm">${item.name}</h4>
+                    <p class="text-xs text-on-surface-variant font-medium">
+                        Cant: ${item.quantity} x $${item.price.toFixed(2)} — <span class="text-secondary font-bold">$${subTotal.toFixed(2)}</span>
+                    </p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="editAromaQty(${idx})" class="w-8 h-8 rounded-xl bg-[#ffe088] hover:bg-[#e9c349] text-[#241a00] flex items-center justify-center transition-colors shadow-sm">
+                        <span class="material-symbols-outlined text-lg">edit</span>
+                    </button>
+                    <button onclick="removeAromaItem(${idx})" class="w-8 h-8 rounded-xl bg-error text-white hover:bg-[#93000a] flex items-center justify-center transition-colors shadow-sm">
+                        <span class="material-symbols-outlined text-lg">delete</span>
+                    </button>
+                </div>
+            `;
+            listContainer.appendChild(cardItem);
+        });
+
+        if(totalValueElem) totalValueElem.innerText = `$${computedTotal.toFixed(2)}`;
+        
+        if(badgeCount) { badgeCount.innerText = totalAromasCount; badgeCount.classList.remove('hidden'); }
+        if(badgeHeader) { badgeHeader.innerText = totalAromasCount; badgeHeader.classList.remove('hidden'); }
+
+        if(sendButton) {
+            sendButton.classList.remove('opacity-60', 'pointer-events-none');
+            let textMessage = `Hola Aromas Exclusivos SV, deseo hacer el siguiente pedido de aromas:%0A%0A`;
+            aromaCart.forEach(item => {
+                textMessage += `• ${item.quantity}x ${item.name} ($${(item.price * item.quantity).toFixed(2)})%0A`;
+            });
+            textMessage += `%0A*Total de la orden:* $${computedTotal.toFixed(2)}%0A_(No incluye la tarifa de envío elegida)_`;
+            sendButton.href = `https://wa.me/50373247142?text=${textMessage}`;
+        }
+    }
+
+    function editAromaQty(idx) {
+        const currentAmount = aromaCart[idx].quantity;
+        const promptValue = prompt(`Cambiar cantidad para ${aromaCart[idx].name}:`, currentAmount);
+        if(promptValue !== null) {
+            const updatedQty = parseInt(promptValue, 10);
+            if(!isNaN(updatedQty) && updatedQty > 0) {
+                aromaCart[idx].quantity = updatedQty;
+            } else if(updatedQty === 0) {
+                removeAromaItem(idx);
+                return;
+            } else {
+                alert("Por favor ingresa una cantidad numérica válida.");
+            }
+            refreshCartUI();
+        }
+    }
+
+    function removeAromaItem(idx) {
+        aromaCart.splice(idx, 1);
+        refreshCartUI();
+    }
+    
+    function toggleSelectMenu() {
+        const menu = document.getElementById("select-menu");
+        if(!menu) return;
+
+        if(menu.classList.contains("hidden")) {
+            renderSelectMenu();
+            menu.classList.remove("hidden");
+        } else {
+            menu.classList.add("hidden");
+        }
+    }
+
+    function getAllAromasFromPage() {
+        const aromas = [];
+        document.querySelectorAll('.product-section').forEach(section => {
+            const sectionName = section.querySelector('h2')?.innerText.trim() || 'Aroma';
+            section.querySelectorAll('h3').forEach(titleElem => {
+                const productCard = titleElem.closest('div');
+                if(!productCard) return;
+                const priceElem = productCard.querySelector('span.text-secondary, span.font-bold, span.text-base');
+                if(!priceElem) return;
+                const priceText = priceElem.innerText.trim().replace('$', '').replace(',', '.');
+                const price = parseFloat(priceText) || 0;
+                aromas.push({ name: titleElem.innerText.trim(), price, category: sectionName });
+            });
+        });
+        return aromas;
+    }
+
+    function renderSelectMenu() {
+        const menuItems = document.getElementById('select-menu-items');
+        const emptyText = document.getElementById('select-menu-empty');
+        if(!menuItems) return;
+
+        const aromas = getAllAromasFromPage();
+        menuItems.innerHTML = '';
+        if(aromas.length === 0) {
+            if(emptyText) emptyText.classList.remove('hidden');
+            return;
+        }
+
+        if(emptyText) emptyText.classList.add('hidden');
+        if(selectMenuSelections.length !== aromas.length) {
+            selectMenuSelections = aromas.map(item => {
+                const existingItem = aromaCart.find(cartItem => cartItem.name === item.name);
+                return {
+                    name: item.name,
+                    price: item.price,
+                    category: item.category,
+                    quantity: existingItem ? existingItem.quantity : 1
+                };
+            });
+        }
+
+        selectMenuSelections.forEach((item, idx) => {
+            const row = document.createElement('div');
+            row.className = 'flex flex-col gap-3 p-3 rounded-2xl bg-surface-bright border border-outline-variant/30';
+            row.innerHTML = `
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex-1">
+                        <h4 class="font-body-lg font-semibold text-on-surface">${item.name}</h4>
+                        <p class="text-body-sm text-on-surface-variant">${item.category}</p>
+                        <p class="text-xs text-on-surface-variant mt-2">Precio unitario: <span class="font-bold text-secondary">$${item.price.toFixed(2)}</span></p>
+                        <p class="text-xs text-on-surface-variant">Cantidad: <span id="select-menu-qty-${idx}" class="font-bold">${item.quantity}</span></p>
+                        <p class="text-xs text-on-surface-variant">Subtotal: <span id="select-menu-subtotal-${idx}" class="font-bold">$${(item.price * item.quantity).toFixed(2)}</span></p>
+                    </div>
+                    <div class="flex flex-col gap-2 items-end w-full max-w-[140px]">
+                        <button onclick="editSelectMenuQty(${idx})" class="w-full px-3 py-2 rounded-xl bg-[#ffe088] hover:bg-[#e9c349] text-[#241a00] text-sm font-semibold transition-colors">Editar</button>
+                        <button onclick="deleteSelectMenuItem(${idx})" class="w-full px-3 py-2 rounded-xl bg-error text-white hover:bg-[#93000a] text-sm font-semibold transition-colors">Eliminar</button>
+                        <button onclick="addSelectMenuToCart(${idx})" class="w-full px-3 py-2 rounded-xl bg-primary text-white hover:bg-primary/90 text-sm font-semibold transition-colors">Agregar</button>
+                    </div>
+                </div>
+            `;
+            menuItems.appendChild(row);
+        });
+    }
+
+    function updateSelectMenuItem(idx) {
+        const item = selectMenuSelections[idx];
+        if(!item) return;
+        const qtyElem = document.getElementById(`select-menu-qty-${idx}`);
+        const subtotalElem = document.getElementById(`select-menu-subtotal-${idx}`);
+        if(qtyElem) qtyElem.innerText = item.quantity;
+        if(subtotalElem) subtotalElem.innerText = `$${(item.price * item.quantity).toFixed(2)}`;
+    }
+
+    function editSelectMenuQty(idx) {
+        const item = selectMenuSelections[idx];
+        if(!item) return;
+        const newQty = prompt(`Editar cantidad para ${item.name}:`, item.quantity);
+        if(newQty !== null) {
+            const parsed = parseInt(newQty, 10);
+            if(!isNaN(parsed) && parsed > 0) {
+                item.quantity = parsed;
+                updateSelectMenuItem(idx);
+            } else {
+                alert('Por favor ingresa una cantidad válida mayor que cero.');
+            }
+        }
+    }
+
+    function deleteSelectMenuItem(idx) {
+        const item = selectMenuSelections[idx];
+        if(!item) return;
+        item.quantity = 0;
+        updateSelectMenuItem(idx);
+    }
+
+    function addSelectMenuToCart(idx) {
+        const item = selectMenuSelections[idx];
+        if(!item) return;
+        if(item.quantity <= 0) {
+            alert('Selecciona una cantidad mayor que cero antes de agregar.');
+            return;
+        }
+
+        const existingItem = aromaCart.find(cartItem => cartItem.name === item.name);
+        if(existingItem) {
+            existingItem.quantity += item.quantity;
+        } else {
+            aromaCart.push({ name: item.name, price: item.price, quantity: item.quantity });
+        }
+        refreshCartUI();
+        alert(`${item.quantity} unidad(es) de ${item.name} se agregaron al carrito.`);
+    }
+
+  function editSelectedItem(button) {
+
+    const itemCard = button.closest('.flex.items-center.justify-between');
+
+    const qtyText = itemCard.querySelector('.bg-primary\\/10');
+
+    let currentQty = parseInt(qtyText.innerText.replace('Cantidad: ', ''));
+
+    let newQty = prompt("Editar cantidad:", currentQty);
+
+    if(newQty !== null) {
+
+        newQty = parseInt(newQty);
+
+        if(!isNaN(newQty) && newQty > 0) {
+
+            qtyText.innerText = "Cantidad: " + newQty;
+
+        } else {
+
+            alert("Cantidad inválida");
+
+        }
+    }
+}
+
+function deleteSelectedItem(button) {
+
+    const itemCard = button.closest('.flex.items-center.justify-between');
+
+    itemCard.remove();
+}
 </script>
 </body>
 </html>
