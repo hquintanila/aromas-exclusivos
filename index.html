@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Aromas Exclusivos SV - Catálogo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#ffffff",
+                    "on-surface": "#111c2d",
+                    "surface-container-low": "#F4EFE3",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#e9c349",
+                    "surface-bright": "#f9f9ff",
+                    "on-secondary-container": "#745c00",
+                    "tertiary-container": "#727577",
+                    "on-tertiary-container": "#fbfdff",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#f9f9ff",
+                    "primary-fixed-dim": "#6cd3f7",
+                    "outline-variant": "#bdc8ce",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#cfdaf2",
+                    "on-secondary-fixed": "#241a00",
+                    "surface-container": "#e7eeff",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "surface-container-highest": "#d8e3fb",
+                    "outline": "#6e797e",
+                    "on-tertiary-fixed": "#191c1e",
+                    "inverse-primary": "#6cd3f7",
+                    "secondary-fixed": "#ffe088",
+                    "surface-tint": "#006780",
+                    "surface": "#f9f9ff",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed": "#b7eaff",
+                    "on-secondary-fixed-variant": "#574500",
+                    "surface-variant": "#d8e3fb",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "secondary": "#735c00",
+                    "secondary-container": "#fed65b",
+                    "inverse-on-surface": "#ecf1ff",
+                    "on-primary-fixed": "#001f28",
+                    "primary": "#00647c",
+                    "on-background": "#111c2d",
+                    "surface-container-high": "#dee8ff",
+                    "on-primary-container": "#fafdff",
+                    "on-primary-fixed-variant": "#004e61",
+                    "tertiary-fixed": "#e0e3e5",
+                    "primary-container": "#007f9d",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#3e484d",
+                    "inverse-surface": "#263143",
+                    "tertiary": "#595c5e",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "stack-lg": "32px",
+                    "stack-md": "16px",
+                    "stack-sm": "8px",
+                    "base": "4px",
+                    "margin-mobile": "20px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Sora"],
+                    "headline-md": ["Sora"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Sora"],
+                    "body-sm": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-md": ["12px", {"letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .scrolling-banner {
+            white-space: nowrap;
+            overflow: hidden;
+            display: flex;
+        }
+        .scrolling-content {
+            display: flex;
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        #category-drawer, #shipping-modal {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+        #category-drawer {
+            transform: translateX(-100%);
+        }
+        #category-drawer.open {
+            transform: translateX(0);
+        }
+        #shipping-modal {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        #shipping-modal.open {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        #drawer-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #drawer-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-sm selection:bg-primary/20">
+
+<div class="fixed inset-0 bg-on-surface/40 backdrop-blur-sm z-[60]" id="drawer-overlay" onclick="closeAllOverlays()"></div>
+
+<div class="fixed top-0 left-0 h-full w-[280px] bg-surface-container-lowest z-[70] shadow-2xl p-6 flex flex-col" id="category-drawer">
+<div class="flex items-center justify-between mb-8">
+<h2 class="font-headline-md text-primary">Categorías</h2>
+<button class="p-2 hover:bg-primary/10 rounded-full transition-colors text-on-surface-variant" onclick="toggleDrawer()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center justify-between p-4 rounded-xl hover:bg-primary/5 active:bg-primary/10 transition-colors border border-outline-variant/10 group" href="javascript:void(0)" onclick="filterCategory('all')">
+<div class="flex flex-col">
+<span class="font-body-lg text-on-surface font-semibold">Todos los aromas</span>
+</div>
+<span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-4 rounded-xl hover:bg-primary/5 active:bg-primary/10 transition-colors border border-outline-variant/10 group" href="javascript:void(0)" onclick="filterCategory('latas-organic')">
+<div class="flex flex-col">
+<span class="font-body-lg text-on-surface font-semibold">Latas Organic:</span>
+<span class="text-body-sm text-secondary font-medium">$6.00</span>
+</div>
+<span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-4 rounded-xl hover:bg-primary/5 active:bg-primary/10 transition-colors border border-outline-variant/10 group" href="javascript:void(0)" onclick="filterCategory('carton-ld')">
+<div class="flex flex-col">
+<span class="font-body-lg text-on-surface font-semibold">Cartón LD:</span>
+<span class="text-body-sm text-secondary font-medium">$3.00</span>
+</div>
+<span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-4 rounded-xl hover:bg-primary/5 active:bg-primary/10 transition-colors border border-outline-variant/10 group" href="javascript:void(0)" onclick="filterCategory('super-organic')">
+<div class="flex flex-col">
+<span class="font-body-lg text-on-surface font-semibold">Super Organic:</span>
+<span class="text-body-sm text-secondary font-medium">$5.00</span>
+</div>
+<span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-outline-variant/20">
+<p class="text-body-sm text-on-surface-variant/60 text-center">Aromas Exclusivos SV © 2024</p>
+</div>
+</div>
+
+<div class="fixed bottom-0 left-0 right-0 z-[70] bg-surface-container-lowest rounded-t-[32px] shadow-[0_-8px_30px_rgb(0,0,0,0.12)] p-6 pb-12" id="shipping-modal">
+<div class="w-12 h-1.5 bg-outline-variant/30 rounded-full mx-auto mb-6"></div>
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">local_shipping</span>
+</div>
+<div>
+<h2 class="font-headline-md text-on-surface">Tarifas de Envío</h2>
+<p class="text-body-sm text-on-surface-variant">Entrega rápida y segura</p>
+</div>
+</div>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors text-on-surface-variant" onclick="toggleShippingModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl border border-outline-variant/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">home_pin</span>
+<span class="font-body-lg text-on-surface font-medium">San Salvador</span>
+</div>
+<span class="font-headline-md text-secondary">Desde $1.50</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl border border-outline-variant/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">distance</span>
+<span class="font-body-lg text-on-surface font-medium">Departamentales</span>
+</div>
+<span class="font-headline-md text-secondary">Desde $1.50</span>
+</div>
+</div>
+<div class="mt-8">
+<a class="flex items-center justify-center gap-2 w-full bg-primary text-white py-4 rounded-xl font-semibold hover:bg-primary/90 transition-colors" href="https://wa.me/50373247142">
+<span class="material-symbols-outlined">chat</span>
+            Consultar disponibilidad
+        </a>
+</div>
+</div>
+
+<header class="docked full-width top-0 sticky z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 px-margin-mobile py-4 flex items-center justify-between">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined">location_on</span>
+<span class="font-headline-md text-headline-md-mobile font-bold">Aromas Exclusivos SV</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="text-primary hover:bg-primary/10 transition-colors p-2 rounded-full">
+</button>
+<a class="text-primary hover:bg-primary/10 transition-colors p-2 rounded-full inline-flex items-center justify-center" href="https://share.google/lXhw58o3DaJQeL7Pt" target="_blank">
+<span class="material-symbols-outlined">location_on</span>
+</a>
+<button class="text-primary hover:bg-primary/10 transition-colors p-2 rounded-full" onclick="toggleShippingModal()">
+<span class="material-symbols-outlined">local_shipping</span>
+</button>
+</div>
+</header>
+
+<main class="pb-24">
+<section class="relative h-[60vh] w-full flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="A luxurious car interior detail" class="w-full h-full object-cover brightness-75" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXoSSc5A-E5416L2grMIHjIbXXJ3gX5wnh_EMZw7xXS2uGNGG2F2yzEGIZan0_PNrfvIS605Fe8er0jNTCVPWdILpZc4ZqWxMJsg8907nMyXVzoYNM5qP07pQxeHV3tZU9uds-D39YibKZXced9FFQlArLmdpKX_dIAIbgkISEt9fwL43T78T6wT9ud3lRfSBi3HvKXUI9R1dkTYwfKNlDck-rnIQdz65pSIySlMGL4fjtoBx6GzrLYBtRWUGO7OQVT-d3az9YmX_E">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background"></div>
+</div>
+<div class="relative z-10 text-center px-6">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-white drop-shadow-lg mb-2">Aromas Exclusivos SV</h1>
+<p class="font-label-md text-label-md text-primary-fixed bg-primary/40 backdrop-blur-md inline-block px-4 py-1 rounded-full border border-primary-fixed/30 mb-6">Ilopango, San Salvador</p>
+<div class="glass-card p-6 rounded-xl border border-white/20 shadow-xl max-w-xs mx-auto" style="transform: scale(1);">
+<p class="font-body-lg text-body-lg text-on-surface italic leading-relaxed">
+                    "Transforma cada viaje en una experiencia unforgettable. El aroma de la exclusividad en tu camino."
+                </p>
+</div>
+</div>
+</section>
+
+<section class="bg-primary py-3 overflow-hidden">
+<div class="scrolling-banner">
+<div class="scrolling-content flex items-center gap-8 px-4">
+<span class="font-label-md text-label-md text-on-primary uppercase tracking-widest whitespace-nowrap">Envíos en San Salvador desde $1.50 • Envíos Departamentales desde $1.50 • Calidad Premium</span>
+<span class="font-label-md text-label-md text-on-primary uppercase tracking-widest whitespace-nowrap">Envíos en San Salvador desde $1.50 • Envíos Departamentales desde $1.50 • Calidad Premium</span>
+</div>
+</div>
+</section>
+
+<nav class="sticky top-[73px] z-40 bg-surface/90 backdrop-blur-md border-b border-outline-variant/20 py-3 px-margin-mobile flex justify-center flex-wrap gap-3">
+  <button onclick="filterCategory('all')" id="btn-all" class="nav-btn px-4 py-1.5 bg-primary text-white rounded-full font-semibold text-xs tracking-wider uppercase transition-all shadow-sm">Todos</button>
+  <button onclick="filterCategory('latas-organic')" id="btn-latas-organic" class="nav-btn px-4 py-1.5 bg-surface-container-high text-on-surface hover:bg-primary/10 rounded-full font-semibold text-xs tracking-wider uppercase transition-all">Latas Organic</button>
+  <button onclick="filterCategory('carton-ld')" id="btn-carton-ld" class="nav-btn px-4 py-1.5 bg-surface-container-high text-on-surface hover:bg-primary/10 rounded-full font-semibold text-xs tracking-wider uppercase transition-all">Cartón LD</button>
+  <button onclick="filterCategory('super-organic')" id="btn-super-organic" class="nav-btn px-4 py-1.5 bg-surface-container-high text-on-surface hover:bg-primary/10 rounded-full font-semibold text-xs tracking-wider uppercase transition-all">Super Organic</button>
+</nav>
+
+<section class="product-section mt-stack-lg px-margin-mobile scroll-mt-40" id="latas-organic">
+<div class="flex items-center justify-between mb-stack-md border-b border-primary/10 pb-2">
+<h2 class="font-headline-md text-headline-md text-primary">Latas Organic</h2>
+<span class="font-headline-md text-headline-md text-secondary">$6.00</span>
+</div>
+<div class="grid grid-cols-1 gap-y-stack-md">
+<div class="flex gap-4 items-center bg-surface-container-low p-3 rounded-xl border border-outline-variant/20">
+<img alt="Elite Class" class="w-16 h-16 object-cover rounded-lg shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2Fu0yBLQaQOl2QzqzP_rPlss6gsTt5PbSxWMH1iKWaqKohCCsH8JLTOdEthaEX2ErKB5cr8G31fGmDfzBaV85Lbe933WM3rdZzRafhXBjDfT33DOZ2yNVn9Ok45YsZjM2j-LwWyCPweyjC4SNz9Ke7j4meUvxTC0jwZJgNSGW44E2JTUaIF1jGw006bX2EyLjuSxrcbjldV830kNZt6AoMBY3G7C_GGd2CxueH_G4x6Jwlnl2LKxay_CCf8WLAqjvzUvHn5aiJUZ4">
+<div class="flex flex-col">
+<h3 class="font-headline-md text-body-lg text-on-surface">Elite Class</h3>
+<p class="text-body-sm text-on-surface-variant">Fragancia exclusiva y sofisticada para un ambiente premium.</p>
+<span class="text-secondary font-bold mt-3 text-base">$6.00</span>
+</div>
+</div>
+<div class="flex gap-4 items-center bg-surface-container-low p-3 rounded-xl border border-outline-variant/20">
+<img alt="Wild Berries" class="w-16 h-16 object-cover rounded-lg shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5qx8aP6pyU9yK5ZWSvT5E1ANyuo2MGerWKLX6CNBKDPAQ6FUrjJIIK3wE_Yt3HzH30DWbXI8bHJBJaJ84-nBJpnbSVAk9tw7YC5_r1Kn2ImPCjYM5ftFlOCdw6WYyupcR2-aSs3tXpxP5Reegts5mArWx6DI9vcW7CubK4dW3L4R00ZNg2jlHI5nIR7Pw82d7Dhgrdz3RAV3Mv9YRPFvMElYjwmurTNpe5RazncfkAecwe4nIVdPFY1e3p8sDpCvID47zDxNB-Bqz">
+<div class="flex flex-col">
+<h3 class="font-headline-md text-body-lg text-on-surface">Wild Berries</h3>
+<p class="text-body-sm text-on-surface-variant">Explosión frutal de bayas silvestres para una frescura natural.</p>
+<span class="text-secondary font-bold mt-3 text-base">$6.00</span>
+</div>
+</div>
+<div class="flex gap-4 items-center bg-surface-container-low p-3 rounded-xl border border-outline-variant/20">
+<img alt="Cherry" class="w-16 h-16 object-cover rounded-lg shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByCxb7r0jfdCGoXUTE3VOIFeNX5WtkDgIdydFg--bI50QTN5bWVHTpU-0UAAM3NinCcunbKenf7Oah4AjjZZ3ghk_AU9FWU_-hgp1bqI6CNnRCQi3IvdcEjxgUDHA1Y3XPPrmPfaVFjE3Pq7xw7AF_yHewF6MszrWLTydFWvaLFrVfDBINu7gKtIpIg0oHaYjvx1c3h5l8S5CQiTf4y08QekMcmu1hgvXk73wPyQwRQcHl4EQlCiwK5sN68Bxf_gyTVlzcshpQ0j1k">
+<div class="flex flex-col">
+<h3 class="font-headline-md text-body-lg text-on-surface">Cherry</h3>
+<p class="text-body-sm text-on-surface-variant">Dulce e intenso aroma a cerezas maduras de larga duración.</p>
+<span class="text-secondary font-bold mt-3 text-base">$6.00</span>
+</div>
+</div>
+<div class="flex gap-4 items-center bg-surface-container-low p-3 rounded-xl border border-outline-variant/20">
+<img alt="Strawberry" class="w-16 h-16 object-cover rounded-lg shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKIKyi-mEB066KkKEAh1Vzxd7kgrYotRxpIe0uL_Ag99QzpatoW9bSHn-SkC3US97yazpBl2SGgb92np3TzMiBYOJtzlHhyu0GI6yLCl969WZZant4Z6DnXAVdrlw0Hck6Y48S8ONeLV0HhI29tqkoF7qVpllFcAqqfV8C56vKNO2NXI7H_5KgPOCudyQYYSRpH69g_p41w0-QiyZ4lmjscm28hBNNpKqbzHbVRBLBsP8voJ2DAPoeBuLJtKZQ69Tan1mSauR7ln1_">
+<div class="flex flex-col">
+<h3 class="font-headline-md text-body-lg text-on-surface">Strawberry</h3>
+<p class="text-body-sm text-on-surface-variant">Frescura vibrante de fresas recién cosechadas en tu auto.</p>
+<span class="text-secondary font-bold mt-3 text-base">$6.00</span>
+</div>
+</div>
+<div class="flex gap-4 items-center bg-surface-container-low p-3 rounded-xl border border-outline-variant/20">
+<img alt="Cool Black" class="w-16 h-16 object-cover rounded-lg shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtrfHFFeOPfeBIy40M2mLtuJBXD876eshoICcgN-Um06ZhzBUSxRD_8ILA9bFQ-xGrlmn6NLuVthcv3smgbLramMXL71wI86HqpSBmjtvpLKmkHRwugzkr1nbMi0C9MFpwW_bM2bkICfB-5hPEY5mPJy8fco2_d9AI4EgUEzGoZ7palEGEBkxrq0KsGfLcypgjpyq7JLuQkXSlwY0XjRA9QyurVAc9gIsolPBGs4obr8GNOOto2Tr5hu43RrT8hrJqy1TGix-PLzGF">
+<div class="flex flex-col">
+<h3 class="font-headline-md text-body-lg text-on-surface">Cool Black</h3>
+<p class="text-body-sm text-on-surface-variant">Toque moderno y masculino con notas profundas y refrescantes.</p>
+<span class="text-secondary font-bold mt-3 text-base">$6.00</span>
+</div>
+</div>
+</div>
+</section>
+
+<section class="product-section mt-stack-lg px-margin-mobile scroll-mt-40" id="carton-ld">
+<div class="flex items-center justify-between mb-stack-md border-b border-primary/10 pb-2">
+<h2 class="font-headline-md text-headline-md text-primary">Cartón LD</h2>
+<span class="font-headline-md text-headline-md text-secondary">$3.00</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2N9fokQS-BLBP4nTQr4UxdqVrwbaEvEbzBGAXnRF0ZtDpqtQGd7Zv2YOzpstU2seKKml3N7BPMI8UGzgGdURvMKPcFRk2q8r6jFLYgvvErCZK7mjYm-Asm-TdCaJ8er_d_pi2wzGMPHKEP-IrHAxq3EPGgg2YtPgydCb1lE8Zvb8DA_ahiPpSFw4kaaOp8dwraKe09AH-DrzwjJY_WifhRCuLMNsRIHBDaPfkr1RGhI5Yj4bLK7PUyaPxaO7mFnWzdGU8pDmw6S0R">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Frutos Rojos</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción editable. Ideal para mantener un ambiente agradable y fresco.</p>
+<span class="text-secondary font-bold mt-3 text-base">$3.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA60JZjGX0J4dCatKUxlKA2IeX7dHJIuZyKGztVi3I1NSxe_9gT1qEufRdiuQLHQk9wKS1enKurzm6QnYE94bhXxGPd7LUOUQeTOk2kLi5kokp26vWdKfqEOcdc7i6wxb7GMiS-DCxSzljAB7o_bdC2kZUF9GF3VHvugrpXxpcISgcsMhnW0nfV2hPCR4GZ9QWPkebB10Wlq4FfxFZW-CeFvog0eB-Ym911SH7qM8WEewcYoNTYWfi30uc-ngIFXiIj2mJSSKK4Hz7Z">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Elite Class</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción editable. Ideal para mantener un ambiente agradable y fresco.</p>
+<span class="text-secondary font-bold mt-3 text-base">$3.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOHUfWcHb6ys0IrxeH7rb40Yb86ThLtzDLvIbY73PMCESgpy9d80lj_LOd5xyhFtAbYiiEMGPxjMYTArm1bGMhfiEI0dOe3gZ7ubJAtZpEZ0yZ9t3lOBztTzz-SQzPXOfAle8gRObJd9nWfeuUUTWr0ihbteQ220P1TmngEiFDByUW2WGW2P7OXzsueHg7RU4kglkDDHiPhX9ZEacx12IqnWEcpqlqN53qnbxTWUa_rCmVBRQQgqCiVzJkH7iqOUGkTT5Wz9Ctvhr7">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Raspberry</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción editable. Ideal para mantener un ambiente agradable y fresco.</p>
+<span class="text-secondary font-bold mt-3 text-base">$3.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7o0pjkVITN4DxiL9K-gaiZ45NE0-gWKnHOGZ_brKlghG1IdfSh_VEaiu7wCd8YP_v6vhN6-_MRHldPspRC1pxiEIek4yuahvxA10Wx_u8BwA2kTLEMSg6IVdlENL8z_XoMhOxGnk8ZegyRzvbwhPQb20I6_N3MEi_EXIpMGP1OSUWZzEWK7CWSoE_lNwwjJ6eJqNR0IwdAmJZieGSlHAxcx8HyOUm51yPNLTnVZmjbQRE8l1-0C0MenzjRBvUP4w5mVd5D1U1opSY">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Elite Class</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción editable. Ideal para mantener un ambiente agradable y fresco.</p>
+<span class="text-secondary font-bold mt-3 text-base">$3.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXip1eMGyDKoQ20OXFHVziLJRwbLLQbFZH8XW7gLuCJ_RZ340M5NBOXDdWa_NrvcsPC-rEdC3h3vmmY2xbtWE85426ulDBRxxFOPqUzXxoussoFvz2ft2uIq2ludOJ33Dhn3QoKxZZwbJK4QkjQCovEuKawqKc5oLEQQzpIQabfKvMzJ8iXrWI_jy5AmwGRN8WTa5j4d3l2LLMez40h4qEMccEoXWkxbSntqpr4dTYXcaY8ZsxTBmpQYaCOCB6oPSzaGuxgVgnjZC0">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">One Billion</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción editable. Ideal para mantener un ambiente agradable y fresco.</p>
+<span class="text-secondary font-bold mt-3 text-base">$3.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZePm_xQSR4mbDot7-u_fQOtsRyXYwTRRODeJJ770dHMOsPmq4ph_5yyB9R_yVPhpgBAj2JzzJUHJ_PtyXUYDsSfLlhU3OZnN8z1J0gVwG-ORROc7KP784lUkDMWhbyA77_MDx1MgsFp5vFXuqMDayD_oQHfOu1X4DVDOTrOUpDlOtDQyzSI_0C4zBo6QrMLMH8vXrlCmhyGeRypZc6IJAyTybBGJWp7rdSA6A9e2g3mhAxFYzRvB6Ty4reCmmE2_biQKFpK7Y1Bt-">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Wild Animals</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción editable. Ideal para mantener un ambiente agradable y fresco.</p>
+<span class="text-secondary font-bold mt-3 text-base">$3.00</span>
+</div>
+</div>
+</section>
+
+<section class="product-section mt-stack-lg px-margin-mobile scroll-mt-40" id="super-organic">
+<div class="flex items-center justify-between mb-stack-md border-b border-primary/10 pb-2">
+<h2 class="font-headline-md text-headline-md text-primary">Super Organic</h2>
+<span class="font-headline-md text-headline-md text-secondary">$5.00</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZaIGVjQ5D0qC9uHs5bTtDrsSQ1uKFD2yB33YKXQUsJ1VVw365c806BTpXaoAs3DUslhf4dJOB0-UyVMIstJ30E2FeUHHoynzQoE8kXXptyKvdvUINRfrF7iU_TAZt6NKLRDPqsRG6qAKGde9Ihrb0J1HD3_pZuCyFVLFWr1T8lfTLqVkvnfP_pYXTym-IXOgdpzsYW_Y5KQ1_jmQPA94DYULIn4QvLTsqgn4q7KOpDa1XAtU89b8fmrnLQz_j4qGSRaV-nJuW2h8C">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Cherry</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<span class="text-secondary font-bold mt-3 text-base">$5.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAkwut3IcowBkVwB6QQT7ZC5flYK4XXA1YgqST_Y17SZ7UzNeiMepZ8iQelffJ2KrKyH_2kUM3770B480xXnPYkPRrDyNhE7hei61kOgl0UN0Y4m6oTSl-8N1F-1PaBHuSU_pjKkaSbf9sYqVKdNGDAhbUqoDpePn1geWEFj9W8kk3XKz0toCQHQZLWyNER3Pw_-t2FLpLuoyMYG8legmyu5zrPFYKFx_2Ts8Fd1yoioGUJnK9gBGksRTyv3Vv9rmFcRR6PwvAHG2-">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Berry Punch</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<span class="text-secondary font-bold mt-3 text-base">$5.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1doGJGDSQ8lWiyyulktNRUB9c0AlqPKsw_800l-HZvAecBgVpSd1PcfRFhJ5C3A2mI2ScPN6SdFtoeTR5BA43o16_HnXNjr4OPoa11vxz8mEXNzMpziTO1A7JpnsYy0FZHk13F0omcs5DnIFsWCs9O44RYJyZRJ4VwU2tulJnRQFH98zDCwXa9CAhzDZT-R_TAh2SmPB4CSS8x98bhWYG9QvW6ZfgyHG6kNakw2pjjQN5iplxJU9ezunATeZcmFmC17Wjcdc1l_3w">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Cran Burst</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<span class="text-secondary font-bold mt-3 text-base">$5.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARW03CJalcH_VW1wHv7RdRUfT9CYhOBSoa4my1LJQsH6WRw36lkvksP79SfJzWdvqX0Wa8yi_wdOafQ2VtYMCvrIHvx5snpMkDu6Mb3m-84x2Ij9zX6M7QlNFAhAqXG_y-kJWQLRe40XKRg_31jXBCuW2agom1upu7mpoqybsm3R-oaZgVAH0XlIceDTIwefhdpaxW974OEbk_Z_due0aZtuwy7_AoykuKDrudVc1E9J9R1Bnpexvo2NuQXUNoV6lJS7QDDD9F2VXf">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Black</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<span class="text-secondary font-bold mt-3 text-base">$5.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTJgy3TguJugHXIoSA2Dek3uOSkCguaJWGL628Kk8qbID3U-IOTr4-PecQECcjKR3MVuYUOEQL3sy5zAmZ0abZMG4FXbSFiO4df5qAPVmaVLP_xrZnhTLtnpziCE0LjSv-hEix-S6qTnSUS6SZBUt3_TCdDxy7WCfQJYWSqqvkIsYDoymX0MlPSY35TsOLRp5LheN9F0c8UDa8ZLCvGio0HQa8TrhUZarc3JTMDtUUzktTKGzqrz3YlLmsGF0NYck3RgylJjfImNQB">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Blue Lava</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<span class="text-secondary font-bold mt-3 text-base">$5.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB144F1dkGX0iQx1qTDv6i-zH4V1WLhFWJm598FA4won4xgEgMKuEehTFupwNtv5g6kUL1VMJysYlT09gKEs50mcw4_o3nFiVa8y3z23faruV-u4rCqFTbwxLDsPN8QebUwFYgF74xQRhhaDVnmrO6dYPBpx66D8XJFmsAj9BXmsmEojuDIeSwAMsl_ZNXPnOZpgVcYiH6CjnSbn5kNBAJEUg28M7EONGAA5ox6YOCQrtnnq0wT1XsagKB-d9u8WXTbE3Fxn9bbZgt6">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">New Car</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<span class="text-secondary font-bold mt-3 text-base">$5.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDu-LcBiRfLS-cnveRK6kUjt18JBbfD0suBPsQxVvYOFZmqM12Jmope2L0rAn8kEbpwbWCrEkwsRj-6jXOBprY-0LhMG6JSFg95soso5bOpAjJrElxtpeca3E7g-xcEad7szKrmR3o0_iwEUeXxltN5uu06nK1_eAWcjGL4fAihNlDBSLmpDbuhtN8Q9Nwbf2FetDAbwV8p8V13ucwqP68ukuW8DP8ltP24I2-MSZASbU4E84ZTb6KmyHWQrVpln0lhsF71OEQH8L7y">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Tropic Twist</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<span class="text-secondary font-bold mt-3 text-base">$5.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvNlM0Q2CnIzzGkSanwpyF_jKO00NLVd0rPmKItnXN4Q0zllj9DcvJ_WMJIcE9hBZYkvktozikvSuPpq1aITAXffHHxu0xKaI6SnWP_EMguuh-Lt9WCU_4inp4dNgasf64RStso-UhiCN-YYLUPR8ipqIyvqMFkhzcZIiiJFyLmHG2W55StD7SwwcSf1ksF-WFxjugkh-BQyRumSMjubPyALeD6LeRDBtIErk5Ynyxt0zozOL_YAp_nBu81ytOx2Z9db8czU949wKZ">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Vanilla Frosting</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<span class="text-secondary font-bold mt-3 text-base">$5.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiqAREXw8WlayidNvoKgDgtnXutZAJWYxH5iFX3pbCSxtoCvehRjFo90XSB-aGRCYvz02neT3Gm8PSIwLaRSig22fOxMRmv1C2KKp6qGQMIjNtwN6IdjcXIXmziRqtLmDx5UVLjpWLRAKys_PI5oIKdT5NR_DHV7gflaAl8rJXRxQ6JILKKqrMQeCSjrC5Me5Hi2aHnpDksXrVghTt4VZG7h9SZ7XgZqzaCNdcHVtNh81Bp6EITENNWLlDBa32TA0VUiKvf26V0DHu">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Tsunami</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<span class="text-secondary font-bold mt-3 text-base">$5.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWBvBKwEyQcGacy8yT7lznk9uUPhgPt49nDWNrHNJMypm_oPQHL0i5bu_8B_bmzYHjCrj5MWC0hEXL4tMv6CSpVPLICQ6ejbKQz45fYPE2IVr0gIikMSjDNfspRdKqYoHnuGeEEGKMIkSQjD42OLYQu9YWYzyKQIgesS-okEPuvwwOWQVkwbVUU05n4dt5k3dNp6ueMrb35dQNff84kWhzhs1z_JvZnEm9KE7bQu6l9pAOdWHP8gltPtyVCWb3YgMcjfev649ORNRr">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Gold</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<span class="text-secondary font-bold mt-3 text-base">$5.00</span>
+</div>
+<div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
+<img class="w-full h-40 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBO4DVC8fHj7skm8WsSI4-viJoWYdVJUTWuhw_SNLGAdLuHqu2-pkivQInNE4vCXh9-HffWmGdLffWBk1JdjKab2MdcJiHF3e62AmBtEMpA2oH8ltGMGLEdifiMmFHnXV2BbAXYBXjdiHuwCUd7logkbtd8jVE96V8HoHomJyhU_oNa2Y8pHPQf0D_6zdf_SbNhuqcC2PRSDazG46ZGh_GM_9WoUpM4sfpy6dK6DeNlCAwoeyw5rJfwXdspMctp222Za0dwV3Qi6n1">
+<h3 class="font-headline-md text-body-lg text-on-surface font-bold">Pure Sunshine</h3>
+<p class="text-body-sm text-on-surface-variant flex-grow mt-1">Mini descripción de aroma orgánico de larga duración.</p>
+<span class="text-secondary font-bold mt-3 text-base">$5.00</span>
+</div>
+</div>
+</section>
+</main>
+
+<a class="fixed bottom-24 right-6 z-[55] flex items-center justify-center bg-[#25D366] text-white w-14 h-14 rounded-full shadow-2xl hover:scale-110 transition-transform active:scale-95 group" href="https://wa.me/50373247142" target="_blank"><span class="material-symbols-outlined text-[32px]">chat</span></a>
+
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface/90 backdrop-blur-2xl shadow-[0_-4px_20px_rgba(0,103,128,0.08)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-md text-label-md">Catálogo</span>
+</a>
+<button class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:text-primary transition-colors" onclick="toggleDrawer()">
+<span class="material-symbols-outlined">category</span>
+<span class="font-label-md text-label-md">Categorías</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:text-primary transition-colors" onclick="toggleShippingModal()">
+<span class="material-symbols-outlined">delivery_dining</span>
+<span class="font-label-md text-label-md">Envíos</span>
+</button>
+</nav>
+
+<script>
+    function filterCategory(categoryId) {
+        const sections = document.querySelectorAll('.product-section');
+        const buttons = document.querySelectorAll('.nav-btn');
+        
+        sections.forEach(section => {
+            if (categoryId === 'all' || section.id === categoryId) {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        });
+
+        buttons.forEach(btn => {
+            if (btn.id === `btn-${categoryId}`) {
+                btn.className = "nav-btn px-4 py-1.5 bg-primary text-white rounded-full font-semibold text-xs tracking-wider uppercase transition-all shadow-sm";
+            } else {
+                btn.className = "nav-btn px-4 py-1.5 bg-surface-container-high text-on-surface hover:bg-primary/10 rounded-full font-semibold text-xs tracking-wider uppercase transition-all";
+            }
+        });
+        
+        closeAllOverlays();
+    }
+
+    function toggleDrawer() {
+        const drawer = document.getElementById('category-drawer');
+        const overlay = document.getElementById('drawer-overlay');
+        const modal = document.getElementById('shipping-modal');
+        modal.classList.remove('open');
+        drawer.classList.toggle('open');
+        overlay.classList.toggle('open');
+        updateBodyScroll();
+    }
+
+    function toggleShippingModal() {
+        const modal = document.getElementById('shipping-modal');
+        const overlay = document.getElementById('drawer-overlay');
+        const drawer = document.getElementById('category-drawer');
+        drawer.classList.remove('open');
+        modal.classList.toggle('open');
+        overlay.classList.toggle('open');
+        updateBodyScroll();
+    }
+
+    function closeAllOverlays() {
+        document.getElementById('category-drawer').classList.remove('open');
+        document.getElementById('shipping-modal').classList.remove('open');
+        document.getElementById('drawer-overlay').classList.remove('open');
+        updateBodyScroll();
+    }
+
+    function updateBodyScroll() {
+        const drawerOpen = document.getElementById('category-drawer').classList.contains('open');
+        const modalOpen = document.getElementById('shipping-modal').classList.contains('open');
+        if (drawerOpen || modalOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }
+
+    document.querySelectorAll('.glass-card').forEach(card => {
+        card.addEventListener('mousedown', () => {
+            card.style.transform = 'scale(0.98)';
+            card.style.transition = 'transform 0.1s ease';
+        });
+        card.addEventListener('mouseup', () => {
+            card.style.transform = 'scale(1)';
+        });
+    });
+</script>
+</body>
+</html>
