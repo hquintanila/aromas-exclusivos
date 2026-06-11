@@ -561,7 +561,7 @@
     <h2 class="font-headline-md text-headline-md text-primary">Super Organic</h2>
     <span class="font-headline-md text-headline-md text-secondary">$5.00</span>
   </div>
-  
+  <!-- Producto 1: Cherry -->
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
     <div class="flex flex-col bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 shadow-sm">
       <img class="w-full h-56 object-cover rounded-lg shadow-sm mb-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZaIGVjQ5D0qC9uHs5bTtDrsSQ1uKFD2yB33YKXQUsJ1VVw365c806BTpXaoAs3DUslhf4dJOB0-UyVMIstJ30E2FeUHHoynzQoE8kXXptyKvdvUINRfrF7iU_TAZt6NKLRDPqsRG6qAKGde9Ihrb0J1HD3_pZuCyFVLFWr1T8lfTLqVkvnfP_pYXTym-IXOgdpzsYW_Y5KQ1_jmQPA94DYULIn4QvLTsqgn4q7KOpDa1XAtU89b8fmrnLQz_j4qGSRaV-nJuW2h8C">
@@ -881,6 +881,17 @@
     let selectMenuSelections = [];
 
     function openQuantityModal(name, price, category = 'Aroma') {
+        const currentInCart = aromaCart.find(item => item.name === name)?.quantity || 0;
+
+        if ((name === 'Berry Punch' || name === 'Vanilla Frosting') && currentInCart >= 1) {
+            alert("Stock Actual del Aroma Cantidad de 1");
+            return;
+        }
+        if (name === 'Fresa Intensa' && currentInCart >= 2) {
+            alert("Stock Actual del Aroma Cantidad de 2");
+            return;
+        }
+
         tempSelectedProduct = { name: name, price: price, category: category };
         tempSelectedQty = 1; 
 
@@ -920,6 +931,21 @@
     }
 
     function changeModalQty(amount) {
+        const name = tempSelectedProduct.name;
+        const currentInCart = aromaCart.find(item => item.name === name)?.quantity || 0;
+
+        if (amount > 0) {
+            const totalProposed = currentInCart + tempSelectedQty + amount;
+            if ((name === 'Berry Punch' || name === 'Vanilla Frosting') && totalProposed > 1) {
+                alert("Stock Actual del Aroma Cantidad de 1");
+                return;
+            }
+            if (name === 'Fresa Intensa' && totalProposed > 2) {
+                alert("Stock Actual del Aroma Cantidad de 2");
+                return;
+            }
+        }
+
         tempSelectedQty += amount;
         if(tempSelectedQty < 1) tempSelectedQty = 1; 
 
@@ -938,6 +964,18 @@
         const qty = tempSelectedQty;
 
         const currentItem = aromaCart.find(item => item.name === name);
+        const existingQty = currentItem ? currentItem.quantity : 0;
+        const totalRequested = existingQty + qty;
+
+        if ((name === 'Berry Punch' || name === 'Vanilla Frosting') && totalRequested > 1) {
+            alert("Stock Actual del Aroma Cantidad de 1");
+            return;
+        }
+        if (name === 'Fresa Intensa' && totalRequested > 2) {
+            alert("Stock Actual del Aroma Cantidad de 2");
+            return;
+        }
+
         if(currentItem) {
             currentItem.quantity += qty;
         } else {
@@ -950,6 +988,18 @@
 
     function addAromaToCart(name, price) {
         const currentItem = aromaCart.find(item => item.name === name);
+        const existingQty = currentItem ? currentItem.quantity : 0;
+        const totalRequested = existingQty + 1;
+
+        if ((name === 'Berry Punch' || name === 'Vanilla Frosting') && totalRequested > 1) {
+            alert("Stock Actual del Aroma Cantidad de 1");
+            return;
+        }
+        if (name === 'Fresa Intensa' && totalRequested > 2) {
+            alert("Stock Actual del Aroma Cantidad de 2");
+            return;
+        }
+
         if(currentItem) {
             currentItem.quantity += 1;
         } else {
@@ -1029,10 +1079,21 @@
     }
 
     function editAromaQty(idx) {
+        const name = aromaCart[idx].name;
         const currentAmount = aromaCart[idx].quantity;
-        const promptValue = prompt(`Cambiar cantidad para ${aromaCart[idx].name}:`, currentAmount);
+        const promptValue = prompt(`Cambiar cantidad para ${name}:`, currentAmount);
         if(promptValue !== null) {
             const updatedQty = parseInt(promptValue, 10);
+
+            if ((name === 'Berry Punch' || name === 'Vanilla Frosting') && updatedQty > 1) {
+                alert("Stock Actual del Aroma Cantidad de 1");
+                return;
+            }
+            if (name === 'Fresa Intensa' && updatedQty > 2) {
+                alert("Stock Actual del Aroma Cantidad de 2");
+                return;
+            }
+
             if(!isNaN(updatedQty) && updatedQty > 0) {
                 aromaCart[idx].quantity = updatedQty;
             } else if(updatedQty === 0) {
@@ -1148,6 +1209,16 @@
         const newQty = prompt(`Editar cantidad para ${item.name}:`, item.quantity);
         if(newQty !== null) {
             const parsed = parseInt(newQty, 10);
+
+            if ((item.name === 'Berry Punch' || item.name === 'Vanilla Frosting') && parsed > 1) {
+                alert("stock actual del Aroma cantidad de 1");
+                return;
+            }
+            if (item.name === 'Fresa Intensa' && parsed > 2) {
+                alert("stock actual del Aroma cantidad de 2");
+                return;
+            }
+
             if(!isNaN(parsed) && parsed > 0) {
                 item.quantity = parsed;
                 updateSelectMenuItem(idx);
@@ -1173,6 +1244,18 @@
         }
 
         const existingItem = aromaCart.find(cartItem => cartItem.name === item.name);
+        const currentQty = existingItem ? existingItem.quantity : 0;
+        const totalRequested = currentQty + item.quantity;
+
+        if ((item.name === 'Berry Punch' || item.name === 'Vanilla Frosting') && totalRequested > 1) {
+            alert("stock actual del Aroma cantidad de 1");
+            return;
+        }
+        if (item.name === 'Fresa Intensa' && totalRequested > 2) {
+            alert("stock actual del Aroma cantidad de 2");
+            return;
+        }
+
         if(existingItem) {
             existingItem.quantity += item.quantity;
         } else {
