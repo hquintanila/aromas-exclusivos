@@ -883,7 +883,7 @@
     function openQuantityModal(name, price, category = 'Aroma') {
         const currentInCart = aromaCart.find(item => item.name === name)?.quantity || 0;
 
-        if ((name === 'Berry Punch' || name === 'Vanilla Frosting') && currentInCart >= 1) {
+        if ((name === 'Berry Punch' || name === 'Vanilla Frosting' || name === 'Tropic Twist') && currentInCart >= 1) {
             alert("Stock Actual del Aroma Cantidad de 1");
             return;
         }
@@ -936,7 +936,7 @@
 
         if (amount > 0) {
             const totalProposed = currentInCart + tempSelectedQty + amount;
-            if ((name === 'Berry Punch' || name === 'Vanilla Frosting') && totalProposed > 1) {
+            if ((name === 'Berry Punch' || name === 'Vanilla Frosting' || name === 'Tropic Twist') && totalProposed > 1) {
                 alert("Stock Actual del Aroma Cantidad de 1");
                 return;
             }
@@ -967,7 +967,7 @@
         const existingQty = currentItem ? currentItem.quantity : 0;
         const totalRequested = existingQty + qty;
 
-        if ((name === 'Berry Punch' || name === 'Vanilla Frosting') && totalRequested > 1) {
+        if ((name === 'Berry Punch' || name === 'Vanilla Frosting' || name === 'Tropic Twist') && totalRequested > 1) {
             alert("Stock Actual del Aroma Cantidad de 1");
             return;
         }
@@ -991,7 +991,7 @@
         const existingQty = currentItem ? currentItem.quantity : 0;
         const totalRequested = existingQty + 1;
 
-        if ((name === 'Berry Punch' || name === 'Vanilla Frosting') && totalRequested > 1) {
+        if ((name === 'Berry Punch' || name === 'Vanilla Frosting' || name === 'Tropic Twist') && totalRequested > 1) {
             alert("Stock Actual del Aroma Cantidad de 1");
             return;
         }
@@ -1085,7 +1085,7 @@
         if(promptValue !== null) {
             const updatedQty = parseInt(promptValue, 10);
 
-            if ((name === 'Berry Punch' || name === 'Vanilla Frosting') && updatedQty > 1) {
+            if ((name === 'Berry Punch' || name === 'Vanilla Frosting' || name === 'Tropic Twist') && updatedQty > 1) {
                 alert("Stock Actual del Aroma Cantidad de 1");
                 return;
             }
@@ -1210,7 +1210,7 @@
         if(newQty !== null) {
             const parsed = parseInt(newQty, 10);
 
-            if ((item.name === 'Berry Punch' || item.name === 'Vanilla Frosting') && parsed > 1) {
+            if ((item.name === 'Berry Punch' || item.name === 'Vanilla Frosting' || item.name === 'Tropic Twist') && parsed > 1) {
                 alert("stock actual del Aroma cantidad de 1");
                 return;
             }
@@ -1247,7 +1247,7 @@
         const currentQty = existingItem ? existingItem.quantity : 0;
         const totalRequested = currentQty + item.quantity;
 
-        if ((item.name === 'Berry Punch' || item.name === 'Vanilla Frosting') && totalRequested > 1) {
+        if ((item.name === 'Berry Punch' || item.name === 'Vanilla Frosting' || item.name === 'Tropic Twist') && totalRequested > 1) {
             alert("stock actual del Aroma cantidad de 1");
             return;
         }
